@@ -20,7 +20,7 @@ jobs:
           server: ftp.oichegamos.com.br
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
-          server-dir: 'public_html/api'
+          server-dir: 'public_html/api/'
 
       # - name: ⚙️ Setup PHP
       #   uses: "shivammathur/setup-php@v2"
