@@ -1,0 +1,187 @@
+on:
+  push:
+    branches:
+      - main
+
+name: 🚀 Production Deploy
+
+env:
+  RELEASE_BRANCH: 'api/development'
+  APP_NAME: 'catalogo-bergmann'
+  APP_ENV: 'local'
+  APP_DEBUG: 'true'
+  APP_URL: 'https://apidev.distribuidorabergmann.com.br'
+  DB_CONNECTION: 'mysql'
+
+  JWT_TTL: 10080
+  JWT_SECRET: ${{ secrets.JWT_SECRET }}
+
+  DB_HOST: ${{ secrets.DB_HOST }}
+  DB_PORT: ${{ secrets.DB_PORT }}
+  DB_DATABASE: ${{ secrets.DB_DATABASE_DEV }}
+  DB_USERNAME: ${{ secrets.DB_USERNAME_DEV }}
+  DB_PASSWORD: ${{ secrets.DB_PASSWORD_DEV }}
+
+jobs:
+  build:
+    name: ⛏️ Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🏠 Checkout
+        uses: actions/checkout@v2
+
+      - name: 📂 Sync files
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        with:
+          server: ftp.oichegamos.com.br
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASS }}
+          server-dir: 'public_html/api'
+
+      # - name: ⚙️ Setup PHP
+      #   uses: "shivammathur/setup-php@v2"
+      #   with:
+      #     php-version: '7.4'
+
+      # - name: ⚙️ Setup Composer
+      #   uses: "ramsey/composer-install@v2"
+      #   with:
+      #     dependency-versions: highest
+
+      # - name: 👮🏻 Create env file
+      #   uses: SpicyPizza/create-envfile@v1.3
+      #   with:
+      #     envkey_ENV_NAME: ${{ env.ENV_VALUE }}
+
+      # - name: 💼 Zip vendor file
+      #   uses: montudor/action-zip@v1
+      #   with:
+      #     args: zip -qq -r vendor.zip vendor
+
+      # - name: 📤 Upload vendor
+      #   uses: actions/upload-artifact@v3.1.0
+      #   with:
+      #     name: vendor
+      #     path: './vendor.zip'
+
+      # - name: 🎁 Create build
+      #   uses: actions/upload-artifact@v3.1.0
+      #   with:
+      #     name: dist
+      #     path: |
+      #       .
+      #       !vendor.zip
+      #       !vendor/**
+      #       !.git/**
+      #       !.github/**
+      #       !.git*
+
+  deploy:
+    if: ${{ false }}
+    name: 🚀 Deploy to ReleasesRepo
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🏠 Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: gabsFlyer/releases-repo
+          ssh-key: ${{ secrets.ssh_key }}
+          ref: ${{ env.RELEASE_BRANCH }}
+
+      - name: ⬇️ Download artifact
+        uses: actions/download-artifact@v3.0.0
+        with:
+          name: dist
+          path: './artifact'
+
+      - name: ⬇️ Download vendor.zip
+        uses: actions/download-artifact@v3.0.0
+        with:
+          name: vendor
+          path: './artifact'
+
+      - name: 🔃Overwrite files
+        run: |
+          rm -rf ./vendor
+          cp -r ./artifact/* ./
+          cp ./artifact/.[^.]* ./
+      - name: 📂 Unzip vendor.zip
+        uses: montudor/action-zip@v1
+        with:
+          args: unzip -qq vendor.zip
+
+      - name: 🗑️ Delete trash
+        run: |
+          rm vendor.zip
+          rm -rf ./artifact
+      - name: 📤 Commit changes
+        uses: EndBug/add-and-commit@v9.0.0
+        with:
+          message: ${{ github.event.head_commit.message }}
+          new_branch: ${{ env.RELEASE_BRANCH }}
+          push: 'origin ${{env.RELEASE_BRANCH}} --set-upstream --force'
+
+
+  backup:
+    if: ${{ false }}
+    name: 📄 Backup and Migration
+    needs: deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🏠 Checkout
+        uses: actions/checkout@v2
+
+      - name: ⚙️ Setup PHP
+        uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: '7.4'
+
+      - name: ⚙️ Setup Composer
+        uses: "ramsey/composer-install@v2"
+        with:
+          dependency-versions: highest
+
+      - name: 👮🏻 Create env file
+        uses: SpicyPizza/create-envfile@v1.3
+        with:
+          envkey_APP_NAME: ${{ env.APP_NAME }}
+          envkey_APP_URL: ${{ env.APP_URL }}
+          envkey_APP_ENV: ${{ env.APP_ENV }}
+          envkey_APP_DEBUG: ${{ env.APP_DEBUG }}
+          envkey_DB_CONNECTION: ${{ env.DB_CONNECTION }}
+          envkey_DB_HOST: ${{ env.DB_HOST }}
+          envkey_DB_PORT: ${{ env.DB_PORT }}
+          envkey_DB_DATABASE: ${{ env.DB_DATABASE }}
+          envkey_DB_USERNAME: ${{ env.DB_USERNAME }}
+          envkey_DB_PASSWORD: ${{ env.DB_PASSWORD }}
+          envkey_JWT_SECRET: ${{ env.JWT_SECRET }}
+          envkey_JWT_TTL: ${{ env.JWT_TTL }}
+
+      - name: 📄 Make Backup
+        run: php artisan backup:run --only-db
+
+      - name: 📤 Upload backup
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          name: backup
+          path: './storage/app/${{ env.APP_NAME }}'
+
+      - name: 🔃 Run migrations
+        run: php artisan migrate --force
+
+  optimize:
+    if: ${{ false }}
+    name: 🧹 Optimize Laravel
+    needs: backup
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🧹 Optimize
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: '${{ env.APP_URL }}/optimize'
+          timeout: 10000
