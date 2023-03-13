@@ -1,4 +1,4 @@
 <?php
-$object = array("message" => " sucess");
+$sucess_object = array("message" => " sucess");
 
-echo json_encode($object);
+echo json_encode($sucess_object);
