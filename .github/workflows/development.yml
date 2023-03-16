@@ -1,9 +1,9 @@
 on:
   push:
     branches:
-      - main
+      - development
 
-name: 🚀 Production Api Deploy
+name: 🚀 Development Api Deploy
 
 jobs:
   build:
