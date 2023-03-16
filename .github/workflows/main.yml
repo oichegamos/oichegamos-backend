@@ -5,6 +5,9 @@ on:
 
 name: 🚀 Production Api Deploy
 
+env:
+  SERVER_DIR: 'public_html/api/'
+
 jobs:
   build:
     name: ⛏️ Build
@@ -20,7 +23,7 @@ jobs:
           server: ftp.oichegamos.com.br
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
-          server-dir: 'public_html/api/'
+          server-dir: ${{ env.SERVER_DIR }}
 
       # - name: ⚙️ Setup PHP
       #   uses: "shivammathur/setup-php@v2"
