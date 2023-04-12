@@ -7,6 +7,20 @@ name: 🚀 Development Api Deploy
 
 env:
   SERVER_DIR: 'public_html/api-dev/'
+  APP_NAME: 'oi-chegamos'
+  APP_ENV: 'local'
+  APP_DEBUG: 'true'
+  APP_URL: 'https://oichegamos.com.br/api-dev'
+  DB_CONNECTION: 'mysql'
+
+  # JWT_TTL: 10080
+  # JWT_SECRET: ${{ secrets.JWT_SECRET }}
+
+  DB_HOST: ${{ secrets.DEV_DB_HOST }}
+  DB_PORT: ${{ secrets.DEV_DB_PORT }}
+  DB_DATABASE: ${{ secrets.DEV_DB_DATABASE }}
+  DB_USERNAME: ${{ secrets.DEV_DB_USERNAME }}
+  DB_PASSWORD: ${{ secrets.DEV_DB_PASSWORD }}
 
 jobs:
   build:
@@ -17,28 +31,29 @@ jobs:
       - name: 🏠 Checkout
         uses: actions/checkout@v2
 
-      - name: 📂 Sync files
-        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+      - name: ⚙️ Setup PHP
+        uses: "shivammathur/setup-php@v2"
         with:
-          server: ftp.oichegamos.com.br
-          username: ${{ secrets.FTP_USER }}
-          password: ${{ secrets.FTP_PASS }}
-          server-dir: ${{ env.SERVER_DIR }}
+          php-version: '8.2'
 
-      # - name: ⚙️ Setup PHP
-      #   uses: "shivammathur/setup-php@v2"
-      #   with:
-      #     php-version: '7.4'
+      - name: ⚙️ Setup Composer
+        uses: "ramsey/composer-install@v2"
+        with:
+          dependency-versions: highest
 
-      # - name: ⚙️ Setup Composer
-      #   uses: "ramsey/composer-install@v2"
-      #   with:
-      #     dependency-versions: highest
-
-      # - name: 👮🏻 Create env file
-      #   uses: SpicyPizza/create-envfile@v1.3
-      #   with:
-      #     envkey_ENV_NAME: ${{ env.ENV_VALUE }}
+      - name: 👮🏻 Create env file
+        uses: SpicyPizza/create-envfile@v1.3
+        with:
+          envkey_APP_NAME: ${{ env.APP_NAME }}
+          envkey_APP_URL: ${{ env.APP_URL }}
+          envkey_APP_ENV: ${{ env.APP_ENV }}
+          envkey_APP_DEBUG: ${{ env.APP_DEBUG }}
+          envkey_DB_CONNECTION: ${{ env.DB_CONNECTION }}
+          envkey_DB_HOST: ${{ env.DB_HOST }}
+          envkey_DB_PORT: ${{ env.DB_PORT }}
+          envkey_DB_DATABASE: ${{ env.DB_DATABASE }}
+          envkey_DB_USERNAME: ${{ env.DB_USERNAME }}
+          envkey_DB_PASSWORD: ${{ env.DB_PASSWORD }}
 
       # - name: 💼 Zip vendor file
       #   uses: montudor/action-zip@v1
@@ -63,58 +78,19 @@ jobs:
       #       !.github/**
       #       !.git*
 
-  deploy:
-    if: ${{ false }}
-    name: 🚀 Deploy to ReleasesRepo
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: 🏠 Checkout
-        uses: actions/checkout@v2
+      - name: 📂 Deploy to FTP
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
-          repository: gabsFlyer/releases-repo
-          ssh-key: ${{ secrets.ssh_key }}
-          ref: ${{ env.RELEASE_BRANCH }}
-
-      - name: ⬇️ Download artifact
-        uses: actions/download-artifact@v3.0.0
-        with:
-          name: dist
-          path: './artifact'
-
-      - name: ⬇️ Download vendor.zip
-        uses: actions/download-artifact@v3.0.0
-        with:
-          name: vendor
-          path: './artifact'
-
-      - name: 🔃Overwrite files
-        run: |
-          rm -rf ./vendor
-          cp -r ./artifact/* ./
-          cp ./artifact/.[^.]* ./
-      - name: 📂 Unzip vendor.zip
-        uses: montudor/action-zip@v1
-        with:
-          args: unzip -qq vendor.zip
-
-      - name: 🗑️ Delete trash
-        run: |
-          rm vendor.zip
-          rm -rf ./artifact
-      - name: 📤 Commit changes
-        uses: EndBug/add-and-commit@v9.0.0
-        with:
-          message: ${{ github.event.head_commit.message }}
-          new_branch: ${{ env.RELEASE_BRANCH }}
-          push: 'origin ${{env.RELEASE_BRANCH}} --set-upstream --force'
+          server: ftp.oichegamos.com.br
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASS }}
+          server-dir: ${{ env.SERVER_DIR }}
 
 
   backup:
     if: ${{ false }}
     name: 📄 Backup and Migration
-    needs: deploy
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
@@ -144,8 +120,8 @@ jobs:
           envkey_DB_DATABASE: ${{ env.DB_DATABASE }}
           envkey_DB_USERNAME: ${{ env.DB_USERNAME }}
           envkey_DB_PASSWORD: ${{ env.DB_PASSWORD }}
-          envkey_JWT_SECRET: ${{ env.JWT_SECRET }}
-          envkey_JWT_TTL: ${{ env.JWT_TTL }}
+          # envkey_JWT_SECRET: ${{ env.JWT_SECRET }}
+          # envkey_JWT_TTL: ${{ env.JWT_TTL }}
 
       - name: 📄 Make Backup
         run: php artisan backup:run --only-db
