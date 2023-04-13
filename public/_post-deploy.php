@@ -29,7 +29,7 @@ function extractVendorZip() {
 }
 
 function printFolderFiles($folder) {
-    $dir = dir($path);
+    $dir = dir($folder);
 
     while ($file = $dir->read()) {
         echo "found file: " . $file;
