@@ -76,6 +76,7 @@ jobs:
         with:
           url: '${{ env.APP_URL }}/_post_deploy.php'
           method: 'POST'
+          timeout: 60000
 
       - name: 📄 Make Backup
         run: php artisan backup:run --only-db
