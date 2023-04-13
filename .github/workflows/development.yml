@@ -74,7 +74,7 @@ jobs:
       - name: Post Deploy
         uses: fjogeleit/http-request-action@v1
         with:
-          url: '${{ env.APP_URL }}/_post_deploy.php'
+          url: '${{ env.APP_URL }}/_post-deploy.php'
           method: 'POST'
           timeout: 60000
 
