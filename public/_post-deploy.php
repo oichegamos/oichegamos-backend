@@ -2,10 +2,10 @@
 
 function extractVendorZip() {
 
-    // $path = './';
+    $path = '../';
 
-    echo('------- ../../');
-    printFolderFiles('../../');
+    echo('-------' . $path);
+    printFolderFiles($path);
 
 
     // $vendorZip = './vendor.zip';
@@ -26,7 +26,7 @@ function printFolderFiles($folder) {
     $dir = dir($folder);
 
     while ($file = $dir->read()) {
-        echo "found file: " . $file;
+        echo "found file: " . $file. '<br>';
     }
 
     $dir->close();
