@@ -71,22 +71,23 @@ jobs:
           password: ${{ secrets.FTP_PASS }}
           server-dir: ${{ env.SERVER_DIR }}
 
-      - name: Post Deploy
-        uses: fjogeleit/http-request-action@v1
-        with:
-          url: '${{ env.APP_URL }}/_post-deploy.php'
-          method: 'POST'
-          timeout: 60000
-          preventFailureOnNoResponse: 'true'
+      # - name: Post Deploy
+      #   uses: fjogeleit/http-request-action@v1
+      #   with:
+      #     url: '${{ env.APP_URL }}/_post-deploy.php'
+      #     method: 'POST'
+      #     timeout: 60000
+      #     preventFailureOnNoResponse: 'true'
+      #     contentType: 'application/json'
 
-      - name: 📄 Make Backup
-        run: php artisan backup:run --only-db
+      # - name: 📄 Make Backup
+      #   run: php artisan backup:run --only-db
 
-      - name: 📤 Upload backup
-        uses: actions/upload-artifact@v3.1.0
-        with:
-          name: backup
-          path: './storage/app/${{ env.APP_NAME }}'
+      # - name: 📤 Upload backup
+      #   uses: actions/upload-artifact@v3.1.0
+      #   with:
+      #     name: backup
+      #     path: './storage/app/${{ env.APP_NAME }}'
 
-      - name: 🔃 Run migrations
-        run: php artisan migrate
+      # - name: 🔃 Run migrations
+      #   run: php artisan migrate
