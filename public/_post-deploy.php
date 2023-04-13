@@ -4,14 +4,8 @@ function extractVendorZip() {
 
     // $path = './';
 
-    echo('------- ./');
-    printFolderFiles('./');
-
-    echo('------- ././');
-    printFolderFiles('././');
-
-    echo('------- ./././');
-    printFolderFiles('./././');
+    echo('------- ../../');
+    printFolderFiles('../../');
 
 
     // $vendorZip = './vendor.zip';
