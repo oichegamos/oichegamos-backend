@@ -8,23 +8,19 @@ function extractVendorZip() {
     if (file_exists($vendorZip)) {
         deleteFolder($vendorFolder);
 
-        echo '> extracting vendor.zip';
-
         $zip = new ZipArchive;
 
         if ($zip->open($vendorZip) === TRUE) {
             $zip->extractTo($path);
             $zip->close();
-
-            echo 'deleting vendor.zip';
             unlink($vendorZip);
+
+            echo 'done!';
         }
     }
 }
 
 function deleteFolder($directory) {
-    echo "> deleting $directory folder<br>";
-
     if (is_dir($directory)) {
       $contents = scandir($directory);
 

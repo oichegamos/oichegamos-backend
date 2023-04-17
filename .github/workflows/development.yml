@@ -72,15 +72,6 @@ jobs:
           password: ${{ secrets.FTP_PASS }}
           server-dir: ${{ env.SERVER_DIR }}
 
-      # - name: Post Deploy
-      #   uses: fjogeleit/http-request-action@v1
-      #   with:
-      #     url: ${{ env.POSTDEPLOY_URL }}
-      #     method: 'POST'
-      #     timeout: 90000
-      #     preventFailureOnNoResponse: 'true'
-      #     contentType: 'application/json'
-
       - name: Post Deploy
         uses: satak/webrequest-action@master
         with:
