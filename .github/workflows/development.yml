@@ -10,8 +10,8 @@ env:
   APP_NAME: 'oi-chegamos'
   APP_ENV: 'local'
   APP_DEBUG: 'true'
-  APP_URL: 'http://oichegamos.com.br/api-dev'
-  POSTDEPLOY_URL: 'https://oichegamos1.websiteseguro.com/api-dev/_post-deploy.php'
+  APP_URL: 'http://api-dev.oichegamos.com.br'
+  POSTDEPLOY_URL: 'http://api-dev.oichegamos.com.br/_post-deploy.php'
   DB_CONNECTION: 'mysql'
 
   # JWT_TTL: 10080
