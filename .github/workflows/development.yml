@@ -10,7 +10,7 @@ env:
   APP_NAME: 'oi-chegamos'
   APP_ENV: 'local'
   APP_DEBUG: 'true'
-  APP_URL: 'https://oichegamos.com.br/api-dev'
+  APP_URL: 'http://oichegamos.com.br/api-dev'
   POSTDEPLOY_URL: 'https://oichegamos1.websiteseguro.com/api-dev/_post-deploy.php'
   DB_CONNECTION: 'mysql'
 
