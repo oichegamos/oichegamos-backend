@@ -14,8 +14,8 @@ env:
   POSTDEPLOY_URL: 'http://api-dev.oichegamos.com.br/_post-deploy.php'
   DB_CONNECTION: 'mysql'
 
-  # JWT_TTL: 10080
-  # JWT_SECRET: ${{ secrets.JWT_SECRET }}
+  JWT_TTL: 10080
+  JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
   DB_HOST: ${{ secrets.DEV_DB_HOST }}
   DB_PORT: ${{ secrets.DEV_DB_PORT }}
@@ -78,14 +78,14 @@ jobs:
           url: ${{ env.POSTDEPLOY_URL }}
           method: POST
 
-      # - name: 📄 Make Backup
-      #   run: php artisan backup:run --only-db
+      - name: 📄 Make Backup
+        run: php artisan backup:run --only-db
 
-      # - name: 📤 Upload backup
-      #   uses: actions/upload-artifact@v3.1.0
-      #   with:
-      #     name: backup
-      #     path: './storage/app/${{ env.APP_NAME }}'
+      - name: 📤 Upload backup
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          name: backup
+          path: './storage/app/${{ env.APP_NAME }}'
 
-      # - name: 🔃 Run migrations
-      #   run: php artisan migrate
+      - name: 🔃 Run migrations
+        run: php artisan migrate
