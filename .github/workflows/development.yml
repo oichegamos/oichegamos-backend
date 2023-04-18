@@ -66,7 +66,7 @@ jobs:
           path: './storage/app/${{ env.APP_NAME }}'
 
       - name: 🔃 Run migrations
-        run: php artisan migrate
+        run: php artisan migrate --force
 
       - name: 💼 Zip vendor file
         uses: montudor/action-zip@v1
