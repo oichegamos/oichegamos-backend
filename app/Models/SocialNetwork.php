@@ -8,7 +8,7 @@ class SocialNetwork extends Model
     protected $with = ['image'];
 
     protected $fillable = [
-        'social_network_name',
+        'name',
         'username',
         'profile_link',
 
@@ -25,7 +25,7 @@ class SocialNetwork extends Model
 
     public function rules(){
         return [
-            'social_network_name' => 'required',
+            'name' => 'required',
             'username' => 'required',
             'profile_link' => 'required',
             'image_id' => 'required',
