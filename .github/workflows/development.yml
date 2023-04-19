@@ -68,6 +68,7 @@ jobs:
           --databases ${{ env.DB_DATABASE }} \
           --no-tablespaces \
           --column-statistics=0 \
+          --ignore-table=${{ env.DB_DATABASE }}.users \
           > backup.sql
   
       - name: 📤 Compress backup
