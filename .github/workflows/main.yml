@@ -61,11 +61,11 @@ jobs:
       - name: 📄 Make Backup
         run: |
           mysqldump \
-          --user=${{ secrets.PRD_DB_USERNAME }} \
-          --password=${{ secrets.PRD_DB_PASSWORD }} \
-          --host=${{ secrets.PRD_DB_HOST }} \
-          --port=${{ secrets.PRD_DB_PORT }} \
-          --databases ${{ secrets.PRD_DB_DATABASE }} \
+          --user=${{ env.DB_USERNAME }} \
+          --password=${{ env.DB_PASSWORD }} \
+          --host=${{ env.DB_HOST }} \
+          --port=${{ env.DB_PORT }} \
+          --databases ${{ env.DB_DATABASE }} \
           --no-tablespaces \
           > backup.sql
   
