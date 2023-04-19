@@ -1,16 +1,16 @@
 <?php
 namespace App\Services;
 
-use App\Models\ImageFile;
+use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Intervention\Image\ImageManagerStatic as Image;
+use Intervention\Image\ImageManagerStatic;
 
 class ImageService extends AbstractService
 {
     private $acceptable_extensions = ['jpg', 'png', 'webp', 'jpeg'];
 
-    public function __construct(ImageFile $model)
+    public function __construct(Image $model)
     {
         $this->model = $model;
     }
@@ -37,7 +37,7 @@ class ImageService extends AbstractService
         $file = explode(',', $base64Image);
         $file = $file[1];
 
-        $upload = Image::make(base64_decode($file))
+        $upload = ImageManagerStatic::make(base64_decode($file))
             -> save(storage_path("app/public/$fileName", 70));
 
         if (!$upload) {
@@ -70,7 +70,7 @@ class ImageService extends AbstractService
         $fileName = $file->file_name;
         $fileLocation = storage_path("app/public/$fileName");
 
-        Image::make($fileLocation)
+        ImageManagerStatic::make($fileLocation)
             ->rotate(-90)
             ->save($fileLocation);
 

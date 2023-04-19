@@ -1,12 +1,12 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\ImageFile;
+use App\Models\Image;
 use App\Services\ImageService;
 
 class ImageController extends Controller
 {
-    public function __construct(ImageFile $model, ImageService $service)
+    public function __construct(Image $model, ImageService $service)
     {
         $this->model = $model;
         $this->service = $service;
