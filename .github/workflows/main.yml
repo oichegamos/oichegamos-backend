@@ -10,7 +10,7 @@ env:
   APP_NAME: 'oi-chegamos'
   APP_ENV: 'prod'
   APP_DEBUG: 'false'
-  API_KEY: ${{ secrets.API_KEY }}
+  APP_KEY: ${{ secrets.APP_KEY }}
   APP_URL: 'http://api.oichegamos.com.br'
   POSTDEPLOY_URL: 'http://api.oichegamos.com.br/_post-deploy.php'
   DB_CONNECTION: 'mysql'
@@ -50,7 +50,7 @@ jobs:
         with:
           envkey_APP_DEBUG: ${{ env.APP_DEBUG }}
           envkey_APP_ENV: ${{ env.APP_ENV }}
-          envkey_API_KEY: ${{ env.API_KEY }}
+          envkey_APP_KEY: ${{ env.APP_KEY }}
           envkey_APP_NAME: ${{ env.APP_NAME }}
           envkey_APP_URL: ${{ env.APP_URL }}
           envkey_DB_CONNECTION: ${{ env.DB_CONNECTION }}
