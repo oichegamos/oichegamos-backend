@@ -9,7 +9,7 @@ if (isset($argv[1])) {
 }
 
 // Cria o nome das classes que serão geradas
-$modelName = $className . 'Model';
+$modelName = $className;
 $controllerName = $className . 'Controller';
 $serviceName = $className . 'Service';
 
