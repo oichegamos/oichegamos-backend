@@ -60,13 +60,14 @@ jobs:
 
       - name: 📄 Make Backup
         run: |
+          export MYSQL_PWD=${{ env.DB_PASSWORD }}
           mysqldump \
           --user=${{ env.DB_USERNAME }} \
-          --password=${{ env.DB_PASSWORD }} \
           --host=${{ env.DB_HOST }} \
           --port=${{ env.DB_PORT }} \
           --databases ${{ env.DB_DATABASE }} \
           --no-tablespaces \
+          --column-statistics=0 \
           > backup.sql
   
       - name: 📤 Compress backup

@@ -67,6 +67,7 @@ jobs:
           --port=${{ env.DB_PORT }} \
           --databases ${{ env.DB_DATABASE }} \
           --no-tablespaces \
+          --column-statistics=0 \
           > backup.sql
   
       - name: 📤 Compress backup
