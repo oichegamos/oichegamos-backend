@@ -50,7 +50,6 @@ jobs:
         with:
           envkey_APP_DEBUG: ${{ env.APP_DEBUG }}
           envkey_APP_ENV: ${{ env.APP_ENV }}
-          envkey_APP_KEY: ${{ env.APP_KEY }}
           envkey_APP_NAME: ${{ env.APP_NAME }}
           envkey_APP_URL: ${{ env.APP_URL }}
           envkey_DB_CONNECTION: ${{ env.DB_CONNECTION }}
@@ -61,8 +60,6 @@ jobs:
           envkey_DB_USERNAME: ${{ env.DB_USERNAME }}
           envkey_JWT_TTL: ${{ env.JWT_TTL }}
           envkey_JWT_SECRET: ${{ env.JWT_SECRET }}
-          envkey_AUTH_GUARD: ${{ env.AUTH_GUARD }}
-          envkey_AUTHENTICATION_DRIVER: ${{ env.AUTHENTICATION_DRIVER }}
 
       - name: 📄 Make Backup
         run: |
