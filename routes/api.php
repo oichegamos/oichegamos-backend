@@ -9,7 +9,7 @@ use App\Http\Controllers\SocialNetworkController;
 
 Route::post('auth/signIn', [AuthController::class, 'login']);
 
-Route::middleware('auth:api')->group(function () {
+Route::middleware('api')->group(function () {
     Route::post('auth/signUp', [AuthController::class, 'register']);
 
     Route::apiResource('images', ImageController::class);
