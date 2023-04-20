@@ -99,7 +99,8 @@ jobs:
       - name: 🧹 Clear project
         run: |
           rm -rf vendor/
-          rm -rf storage/app/${{ env.APP_NAME }}/*
+          rm -rf backup.sql
+          rm -rf backup.zip
 
       - name: 📂 Deploy to FTP
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
