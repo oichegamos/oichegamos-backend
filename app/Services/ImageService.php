@@ -47,6 +47,7 @@ class ImageService extends AbstractService
         $req = $request->all();
         $req['file_name'] = $fileName;
         $req['file_extension'] = $extension;
+        $req['description'] = $request->description;
 
         return $this->model::create($req);
     }
