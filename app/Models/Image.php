@@ -9,7 +9,8 @@ class Image extends Model
         'description',
         'original_name',
         'file_name',
-        'file_extension'
+        'file_extension',
+        'image_url'
     ];
 
     public function rules(){

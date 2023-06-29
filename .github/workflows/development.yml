@@ -13,6 +13,7 @@ env:
   APP_KEY: ${{ secrets.APP_KEY }}
   APP_URL: 'http://api-dev.oichegamos.com.br'
   POSTDEPLOY_URL: 'http://api-dev.oichegamos.com.br/_post-deploy.php'
+  IMAGES_URL: 'http://api-dev.oichegamos.com.br/_images'
   DB_CONNECTION: 'mysql'
   AUTH_GUARD: 'api'
   AUTHENTICATION_DRIVER: 'jwt'
@@ -52,6 +53,7 @@ jobs:
           envkey_APP_ENV: ${{ env.APP_ENV }}
           envkey_APP_NAME: ${{ env.APP_NAME }}
           envkey_APP_URL: ${{ env.APP_URL }}
+          envkey_IMAGES_URL: ${{ env.IMAGES_URL }}
           envkey_DB_CONNECTION: ${{ env.DB_CONNECTION }}
           envkey_DB_DATABASE: ${{ env.DB_DATABASE }}
           envkey_DB_HOST: ${{ env.DB_HOST }}

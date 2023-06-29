@@ -44,10 +44,13 @@ class ImageService extends AbstractService
             return response()->json(['message' => 'Houve um erro no upload'], 500);
         }
 
+        $baseUrl = env('IMAGES_URL');
+
         $req = $request->all();
         $req['file_name'] = $fileName;
         $req['file_extension'] = $extension;
         $req['description'] = $request->description;
+        $req['image_url'] = "{$baseUrl}/{$fileName}";
 
         return $this->model::create($req);
     }
