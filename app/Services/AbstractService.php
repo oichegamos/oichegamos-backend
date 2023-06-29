@@ -58,7 +58,7 @@ class AbstractService
         }
     }
 
-    private function addRelationships(Request $request)
+    protected function addRelationships(Request $request)
     {
         foreach($this->relationships as $rel) {
             $request = $this->moveIdFromObject($request, $rel);

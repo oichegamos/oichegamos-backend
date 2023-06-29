@@ -8,21 +8,20 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\SocialNetworkController;
 
 Route::post('auth/signIn', [AuthController::class, 'login']);
+Route::get('images', [ImageController::class, 'index']);
+Route::get('social-networks', [SocialNetworkController::class, 'index']);
+Route::get('categories', [CategoryController::class, 'index']);
+Route::get('checkins', [CheckinController::class, 'index']);
+Route::get('posts', [PostController::class, 'index']);
+Route::get('posts/slug/{slug}', [PostController::class, 'getPostBySlug']);
 
 Route::middleware('api')->group(function () {
     Route::post('auth/signUp', [AuthController::class, 'register']);
 
-    Route::apiResource('images', ImageController::class);
-    Route::post('images/rotate/{id}', [ImageController::class, 'rotate']);
-
-    Route::apiResource('social-networks', SocialNetworkController::class);
     Route::apiResource('categories', CategoryController::class);
     Route::apiResource('checkins', CheckinController::class);
+    Route::apiResource('images', ImageController::class);
+    Route::post('images/rotate/{id}', [ImageController::class, 'rotate']);
+    Route::apiResource('social-networks', SocialNetworkController::class);
     Route::apiResource('posts', PostController::class);
-
-    
-});
-
-Route::get('phpinfo', function () {
-    phpinfo();
 });

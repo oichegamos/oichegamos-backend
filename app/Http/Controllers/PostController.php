@@ -14,4 +14,8 @@ class PostController extends Controller
         $this->model = $model;
         $this->service = $service;
     }
+
+    public function getPostBySlug($slug) {
+        return $this->service->getPostBySlug($slug);
+    }
 }
