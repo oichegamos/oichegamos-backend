@@ -78,16 +78,6 @@ function optimizeLaravel() {
     }
 }
 
-function createSymbolicLink() {
-    $publicDir = LARAVEL_PATH . 'public';
-    $storageDir = LARAVEL_PATH . 'storage/app/public';
-
-    if (!file_exists($publicDir . '/storage')) {
-        symlink($storageDir, $publicDir . '/storage');
-    }
-}
-
 extractVendorZip();
 optimizeLaravel();
-createSymbolicLink();
 echo 'done!';
