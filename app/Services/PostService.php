@@ -12,4 +12,11 @@ class PostService extends AbstractService
     {
         $this->model = $model;
     }
+
+    public function index($paginate)
+    {
+        return $paginate
+            ? $this->model::orderBy('created_at', 'desc')->paginate()
+            : $this->model::orderBy('created_at', 'desc')->all();
+    }
 }
