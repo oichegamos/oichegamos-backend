@@ -89,4 +89,5 @@ function createSymbolicLink() {
 
 extractVendorZip();
 optimizeLaravel();
+createSymbolicLink();
 echo 'done!';
