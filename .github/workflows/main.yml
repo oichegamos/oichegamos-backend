@@ -11,9 +11,9 @@ env:
   APP_ENV: 'prod'
   APP_DEBUG: 'false'
   APP_KEY: ${{ secrets.APP_KEY }}
-  APP_URL: 'http://api.oichegamos.com.br'
-  POSTDEPLOY_URL: 'http://api.oichegamos.com.br/_post-deploy.php'
-  IMAGES_URL: 'http://api.oichegamos.com.br/_images'
+  APP_URL: 'https://api.oichegamos.com.br'
+  POSTDEPLOY_URL: 'https://api.oichegamos.com.br/_post-deploy.php'
+  IMAGES_URL: 'https://api.oichegamos.com.br/_images'
   DB_CONNECTION: 'mysql'
   AUTH_GUARD: 'api'
   AUTHENTICATION_DRIVER: 'jwt'
