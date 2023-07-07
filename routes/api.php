@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckinController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\OurStatusViewController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SocialNetworkController;
 
@@ -12,6 +13,7 @@ Route::get('images', [ImageController::class, 'index']);
 Route::get('social-networks', [SocialNetworkController::class, 'index']);
 Route::get('categories', [CategoryController::class, 'index']);
 Route::get('checkins', [CheckinController::class, 'index']);
+Route::get('our-status', [OurStatusViewController::class, 'index']);
 Route::get('posts', [PostController::class, 'index']);
 Route::get('posts/slug/{slug}', [PostController::class, 'getPostBySlug']);
 
