@@ -7,7 +7,6 @@ use Illuminate\Support\Str;
 
 class PostService extends AbstractService
 {
-    protected $model;
     protected $relationships = ['image', 'category'];
 
     public function __construct(Post $model)
@@ -24,7 +23,6 @@ class PostService extends AbstractService
 
     public function getPostBySlug($slug) {
         return $this->model::where('slug', $slug)->first();
-        //return Post::where('slug', $slug)->first();
     }
 
     public function store(Request $request)
