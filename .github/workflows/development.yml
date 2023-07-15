@@ -1,19 +1,19 @@
 on:
   push:
     branches:
-      - main
+      - development
 
-name: 🚀 Production Api Deploy
+name: 🚀 Development Api Deploy
 
 env:
-  SERVER_DIR: 'public_html/api/'
+  SERVER_DIR: 'public_html/api-dev/'
   APP_NAME: 'oi-chegamos'
-  APP_ENV: 'prod'
-  APP_DEBUG: 'false'
+  APP_ENV: 'local'
+  APP_DEBUG: 'true'
   APP_KEY: ${{ secrets.APP_KEY }}
-  APP_URL: 'https://api.oichegamos.com.br'
-  POSTDEPLOY_URL: 'https://api.oichegamos.com.br/_post-deploy.php'
-  IMAGES_URL: 'https://api.oichegamos.com.br/_images'
+  APP_URL: 'https://api-dev.oichegamos.com.br'
+  POSTDEPLOY_URL: 'https://api-dev.oichegamos.com.br/_post-deploy.php'
+  IMAGES_URL: 'https://api-dev.oichegamos.com.br/_images'
   DB_CONNECTION: 'mysql'
   AUTH_GUARD: 'api'
   AUTHENTICATION_DRIVER: 'jwt'
@@ -21,11 +21,11 @@ env:
   JWT_TTL: 10080
   JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
-  DB_HOST: ${{ secrets.PRD_DB_HOST }}
-  DB_PORT: ${{ secrets.PRD_DB_PORT }}
-  DB_DATABASE: ${{ secrets.PRD_DB_DATABASE }}
-  DB_USERNAME: ${{ secrets.PRD_DB_USERNAME }}
-  DB_PASSWORD: ${{ secrets.PRD_DB_PASSWORD }}
+  DB_HOST: ${{ secrets.DEV_DB_HOST }}
+  DB_PORT: ${{ secrets.DEV_DB_PORT }}
+  DB_DATABASE: ${{ secrets.DEV_DB_DATABASE }}
+  DB_USERNAME: ${{ secrets.DEV_DB_USERNAME }}
+  DB_PASSWORD: ${{ secrets.DEV_DB_PASSWORD }}
 
 jobs:
   build:
