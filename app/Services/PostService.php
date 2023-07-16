@@ -22,7 +22,7 @@ class PostService extends AbstractService
     }
 
     public function getPostBySlug($slug) {
-        return $this->model::where('slug', $slug)->first();
+        return $this->model::where('slug', $slug)->firstOrFail();
     }
 
     public function store(Request $request)
