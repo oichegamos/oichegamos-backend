@@ -2,8 +2,9 @@
 namespace App\Services;
 
 use App\Models\AboutUs;
+use Illuminate\Http\Request;
 
-class AboutUsService extends AbstractService
+class AboutUsService extends Service
 {
     protected $relationships = ['image'];
     
@@ -12,7 +13,7 @@ class AboutUsService extends AbstractService
         $this->model = $model;
     }
 
-    public function index($paginate)
+    public function index(Request $request, $paginate)
     {
         return $this->model::first();
     }

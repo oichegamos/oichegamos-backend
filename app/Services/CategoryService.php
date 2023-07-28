@@ -3,7 +3,7 @@ namespace App\Services;
 
 use App\Models\Category;
 
-class CategoryService extends AbstractService
+class CategoryService extends Service
 {
     public function __construct(Category $model)
     {

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Intervention\Image\ImageManagerStatic;
 
-class ImageService extends AbstractService
+class ImageService extends Service
 {
     private $acceptable_extensions = ['jpg', 'png', 'webp', 'jpeg'];
 
