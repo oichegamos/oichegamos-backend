@@ -4,14 +4,26 @@ namespace App\Services;
 use Illuminate\Http\Request;
 use PDOException;
 
-class AbstractService
+class Service
 {
     protected $model;
     protected $relationships = [];
+    protected $ignorableFields = ['paginate', 'page'];
 
-    public function index($paginate)
+    public function index(Request $request, $paginate)
     {
-        return $paginate ? $this->model::paginate() : $this->model::all();
+        $query = $this->model::query();
+
+        foreach ($request->all() as $key => $value) {
+            if (!in_array($key, $this->ignorableFields)) {
+                $valueWithPercents = '%' . $value . '%';
+                $query->where($key, 'like', $valueWithPercents);
+            }
+        }
+
+        return $paginate
+            ? $query->orderBy('created_at', 'desc')->paginate()
+            : $query->orderBy('created_at', 'desc')->get();
     }
 
     public function show($id)

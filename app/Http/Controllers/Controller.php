@@ -17,7 +17,7 @@ class Controller extends BaseController
     public function index(Request $request)
     {
         $paginate = filter_var($request->query('paginate', true), FILTER_VALIDATE_BOOLEAN);
-        return $this->service->index($paginate);
+        return $this->service->index($request, $paginate);
     }
 
     public function show($id)

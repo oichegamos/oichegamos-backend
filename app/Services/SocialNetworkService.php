@@ -3,7 +3,7 @@ namespace App\Services;
 
 use App\Models\SocialNetwork;
 
-class SocialNetworkService extends AbstractService
+class SocialNetworkService extends Service
 {
     public function __construct(SocialNetwork $model)
     {
